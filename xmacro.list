@@ -1,0 +1,19 @@
+%product Xmacro
+%copyright 2000 Gabor Keresztfalvi <keresztg@mail.com>
+%vendor Gabor Keresztfalvi
+%license COPYING
+%readme README
+%description X event recorder and replayer utilities
+%version 0.3
+
+# Executables
+%system all
+f 0555 root sys /usr/bin/xmacroplay xmacroplay
+f 0555 root sys /usr/bin/xmacrorec xmacrorec
+f 0555 root sys /usr/bin/xmacrorec2 xmacrorec2
+
+# Man pages - not ready yet
+
+# Documentation and example script
+f 0444 root sys /usr/doc/xmacro/README README
+f 0444 root sys /usr/doc/xmacro/example/run run

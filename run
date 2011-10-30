@@ -1,0 +1,42 @@
+mydisp=:5.0
+
+if [ $# -lt 1 ]
+then
+	echo 'Usage: run <startvfb|stopvfb|rec|play|look|control>'
+	exit
+fi
+
+case $1 in
+	startvfb)
+		Xvfb $mydisp -fbdir /tmp -screen 0 800x600x8 &
+#		Xvfb $mydisp -fbdir /tmp -screen 0 1024x768x8 &
+		icewm -display $mydisp &
+#		xmodmap -display $mydisp /usr/X11R6/lib/X11/xmodmap.std
+#		/home/keresztg/X/swm-1.0a/usr/X11R6/bin/swm -display $mydisp &
+		;;
+	stopvfb)
+		killall Xvfb
+		;;
+	rec)
+		if [ $# != 2 ]
+		then
+			echo 'Usage: run rec <output file>'
+			exit
+		fi
+		(xv -geometry +0+0 -nodecor -wait 2 -wloop /tmp/Xvfb_screen0 &) ; ./xmacrorec -k 110 $mydisp > $2
+		;;
+	play)
+		if [ $# != 2 ]
+		then
+			echo 'Usage: run play <input file>'
+			exit
+		fi
+		./xmacroplay $mydisp < $2
+		;;
+	look)
+		xv -geometry +0+0 -nodecor -wait 2 -wloop /tmp/Xvfb_screen0
+		;;
+	control)
+		(xv -geometry +0+0 -nodecor -wait 2 -wloop /tmp/Xvfb_screen0 &) ; ./xmacrorec -k 110 $mydisp
+		;;
+esac
