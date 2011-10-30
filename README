@@ -1,3 +1,10 @@
+* Portions Copyright (C) 2011 Álvaro Castro-Castilla
+* Portions Copyright (C) 2000 Gabor Keresztfalvi <keresztg@mail.com>
+*
+* This program is heavily based on
+* xremote (http://infa.abo.fi/~chakie/xremote/) which is:
+* Copyright (C) 2000 Jan Ekholm <chakie@infa.abo.fi>
+
 xmacrorec:
  Grabs all the control over your local display and send the mouse and
 keyboard events to the remote display. In the meantime it emits KeyStrPress,
