@@ -51,6 +51,7 @@
 /***************************************************************************** 
  * What iostream do we have?
  ****************************************************************************/
+#define HAVE_IOSTREAM
 #ifdef HAVE_IOSTREAM
 #include <iostream>
 #include <iomanip>
@@ -77,6 +78,8 @@ const float DefaultScale = 1.0;
  ****************************************************************************/
 int   Delay = DefaultDelay;
 float Scale = DefaultScale;
+
+using namespace std;
 
 /***************************************************************************** 
  * Key used for quitting the application.

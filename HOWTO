@@ -1,0 +1,75 @@
+HOWTO - KEYBOARD MACRO IN X11 - 2007-09-05
+=============================
+
+
+*******
+UPDATE - 2008-06-18
+For more complex (and up-to-date) X controlling try "xautomation" tools - http://hoopajoo.net/projects/xautomation.html
+*******
+
+
+Sources I used:
+[1] http://xmacro.sourceforge.net/
+[2] http://ubuntuforums.org/showthread.php?p=3307487
+
+
+-----------------------------------------
+1) Install "xmacro" 
+Gentoo: it is "obsolete" - it hasn't been updated long time, so you must download it from Internet - but it is still fully functional!
+Ubuntu: it is still included in universe package source
+
+-----------------------------------------
+2) change /etc/X11/xorg.conf & restart X11 server:
+*****
+Section "Module"
+...
+        Load    "record"
+...
+EndSection
+*****
+
+-----------------------------------------
+3) Record "macro" you want:
+Usage: xmacrorec2 [options]
+Options:
+  -s  FACTOR  scalefactor for coordinates. Default: 1.0.
+  -k  KEYCODE the keycode for the key used for quitting.
+  -v          show version.
+  -h          this help.
+
+##### "ESC" (-k 9) terminates recording
+$ xmacrorec2 -k 9 > quote
+##### 
+
+-----------------------------------------
+4) Edit your recorded file ("quote"):
+* Remove (the first) line "MotionNotify..."
+* Add to the first line "Delay 1"
+* You can add some "Delay 1" lines, when you have long list of keys
+* The last command MUST NOT end with "new line"
+
+#Modified file "quote"
+>Delay 1
+>KeyStrPress a
+>KeyStrRelease a
+>KeyStrPress n
+>KeyStrRelease n
+>KeyStrPress Return
+>KeyStrRelease Return
+>KeyStrPress Return
+>KeyStrRelease Return*EOF*
+
+-----------------------------------------
+5) Replay your "macro" to X11 server (I recommend to use delay for event ~30ms):
+Usage: xmacroplay [options] remote_display
+Options:
+  -d  DELAY   delay in milliseconds for events sent to remote display.
+              Default: 10ms.
+  -s  FACTOR  scalefactor for coordinates. Default: 1.0.
+  -v          show version.
+  -h          this help.
+
+#####
+$ cat quote |xmacroplay -d 30 :0.0 
+#####
+(You can use e.g. "lineak" <http://lineak.sourceforge.net> or other application to launch your macros)

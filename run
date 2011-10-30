@@ -1,4 +1,4 @@
-mydisp=:5.0
+mydisp=:0
 
 if [ $# -lt 1 ]
 then
