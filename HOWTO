@@ -44,7 +44,7 @@ $ xmacrorec2 -k 9 > quote
 -----------------------------------------
 4) Edit your recorded file ("quote"):
 * Remove (the first) line "MotionNotify..."
-* Add to the first line "Delay 1"
+* Add to the first line "Delay 1" (alternatively, "DelayMs 1000")
 * You can add some "Delay 1" lines, when you have long list of keys
 * The last command MUST NOT end with "new line"
 

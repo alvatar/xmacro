@@ -352,6 +352,12 @@ void eventLoop (Display * RemoteDpy, int RemoteScreen) {
 	  cout << "Delay: " << b << endl;
 	  sleep ( b );
 	}
+	else if (!strcasecmp("DelayMs", ev))
+	{
+	  cin >> b;
+	  cout << "DelayMs: " << b << endl;
+	  usleep (b * 1000);
+	}
 	else if (!strcasecmp("ButtonPress",ev))
 	{
 	  cin >> b;

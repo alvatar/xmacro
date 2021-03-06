@@ -17,7 +17,8 @@ recorded file!
 
 xmacroplay:
  Reads lines from the standard input. It can understand the following lines:
-Delay <sec>		- delays the program with <sec> secundums
+Delay <s>		- delays the program with <s> seconds
+DelayMs <ms>	- delays the program with <ms> milliseconds
 ButtonPress <n>		- sends a ButtonPress event with button <n>
 			  this emulates the pressing of the mouse button <n>
 ButtonRelease <n>	- sends a ButtonRelease event with button <n>
