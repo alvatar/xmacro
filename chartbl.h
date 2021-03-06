@@ -22,7 +22,7 @@
 
 /* Version 0.1 (20000817) probably still incomplete... */
 
-char *chartbl_lat1[] =
+const char *chartbl_lat1[] =
 {
 	"",		//   0  0
 	"",		//   1  1
@@ -282,7 +282,7 @@ char *chartbl_lat1[] =
 	"ydiaeresis",	// 255 FF
 };
 
-char *chartbl_lat2[] =
+const char *chartbl_lat2[] =
 {
 	"",		//   0  0
 	"",		//   1  1
@@ -542,4 +542,4 @@ char *chartbl_lat2[] =
 	"abovedot",	// 255 FF
 };
 
-char **chartbl[]={ chartbl_lat1, chartbl_lat2 };
+const char **chartbl[]={ chartbl_lat1, chartbl_lat2 };

@@ -42,6 +42,9 @@
 #include <stdlib.h>
 #include <X11/Xlibint.h>
 #include <X11/Xlib.h>
+// Xlib.h pollutes some names which give conflicts on some c++ headers
+#undef min // conflicts with std::min
+#undef max // conflicts with std::max
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
 #include <X11/keysymdef.h>
