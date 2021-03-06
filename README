@@ -13,7 +13,8 @@ It emits MotionNotify lines only if the event struct of the above four
 events contains different coordinates than the previous event or a mouse
 button is pressed during the movement. Note: As xmacrorec doesn't save the
 timestamp of the event, you may need to insert Delay statements into the
-recorded file!
+recorded file!  Alternatively, try `xmacrorec2 -d` which inserts delays 
+automatically.
 
 xmacroplay:
  Reads lines from the standard input. It can understand the following lines:

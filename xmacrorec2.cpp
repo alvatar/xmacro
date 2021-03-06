@@ -89,6 +89,7 @@ using namespace std;
  ****************************************************************************/
 unsigned int QuitKey;
 bool HasQuitKey = false;
+bool DelayBetweenEvents = false;
 
 /***************************************************************************** 
  * Private data used in eventCallback.
@@ -99,6 +100,7 @@ typedef struct
 	unsigned int QuitKey;
 	Display *LocalDpy, *RecDpy;
 	XRecordContext rc;
+	unsigned int PrevTimestamp;
 } Priv;
 
 /****************************************************************************/
@@ -116,6 +118,7 @@ void usage (const int exitCode) {
   cerr << "Options: " << endl;
   cerr << "  -s  FACTOR  scalefactor for coordinates. Default: 1.0." << endl
 	   << "  -k  KEYCODE the keycode for the key used for quitting." << endl
+	   << "  -d          add Delay between events." << endl
 	   << "  -v          show version. " << endl
 	   << "  -h          this help. " << endl << endl;
 
@@ -164,6 +167,13 @@ void parseCommandLine (int argc, char * argv[]) {
 	if ( strcmp (argv[Index], "-h" ) == 0 ) {
 	  // yep, show usage and exit
 	  usage ( EXIT_SUCCESS );
+	}
+
+	// is this '-d'?
+	else if ( strcmp (argv[Index], "-d" ) == 0 ) {
+	  // yep, set that flag
+	  DelayBetweenEvents = true;
+	  Index++;
 	}
 
 	// is this '-s'?
@@ -329,6 +339,8 @@ void eventCallback(XPointer priv, XRecordInterceptData *d)
   unsigned short *ud2, seq;
   short *d2, rootx, rooty, eventx, eventy, kstate;
 
+  tstamp = 0;
+
   if (d->category==XRecordStartOfData) cerr << "Got Start Of Data" << endl;
   if (d->category==XRecordEndOfData) cerr << "Got End Of Data" << endl;
   if (d->category!=XRecordFromServer || p->doit==0)
@@ -371,6 +383,23 @@ void eventCallback(XPointer priv, XRecordInterceptData *d)
   	cerr << "  coordinates! This event is now ignored!" << endl;
   	goto returning;
   }
+
+  if (DelayBetweenEvents) {
+    if (tstamp != 0 && p->PrevTimestamp != 0) {
+      // we only care about delays between MotionNotify when a button is held
+      if (type != MotionNotify || p->Status2 > 0) {
+	cout << "DelayMs " << (tstamp - p->PrevTimestamp) << endl;
+	p->PrevTimestamp = tstamp;
+      }
+    }
+
+    // initialize the timestamp on the first event
+    if (p->PrevTimestamp == 0) {
+	p->PrevTimestamp = tstamp;
+    }
+  }
+
+
   // what did we get?
   switch (type) {
     case ButtonPress:
@@ -501,6 +530,7 @@ void eventLoop (Display * LocalDpy, int LocalScreen,
   priv.LocalDpy=LocalDpy;
   priv.RecDpy=RecDpy;
   priv.rc=rc;
+  priv.PrevTimestamp=0;
 
   if (!XRecordEnableContextAsync(RecDpy, rc, eventCallback, (XPointer) &priv))
   {
