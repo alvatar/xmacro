@@ -4,7 +4,7 @@
 %license COPYING
 %readme README
 %description X event recorder and replayer utilities
-%version 0.3
+%version 0.4
 
 # Executables
 %system all
